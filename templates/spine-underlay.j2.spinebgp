@@ -1,0 +1,66 @@
+service routing protocols model multi-agent
+
+{% for item in underlay[inventory_hostname]['interfaces'] %}
+interface {{ item }}
+   ip address {{ underlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ underlay[inventory_hostname]['interfaces'][item]['mask']}}
+   {% if 'Ethernet' in item %}
+   no switchport
+   {% endif %}
+{% endfor %}
+
+ip prefix-list LOOPBACK
+    seq 10 permit 192.168.101.0/24 eq 32
+    seq 11 permit 192.168.102.0/24 eq 32
+    seq 10 permit 192.168.201.0/24 eq 32
+    seq 11 permit 192.168.202.0/24 eq 32
+    seq 11 permit 192.168.253.0/24 eq 32
+
+
+route-map LOOPBACK permit 10
+   match ip address prefix-list LOOPBACK
+
+peer-filter LEAF-AS-RANGE
+ 10 match as-range 65000-65535 result accept
+
+router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
+   router-id {{ underlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}
+   no bgp default ipv4-unicast
+   maximum-paths 3
+   distance bgp 20 200 200
+
+
+
+   bgp listen range 192.168.0.0/16 peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+   
+   neighbor LEAF12_Underlay peer group
+   neighbor LEAF12_Underlay send-community
+   neighbor LEAF12_Underlay maximum-routes 12000
+   neighbor LEAF12_Underlay remote-as {{ underlay[inventory_hostname]['BGP']['leaf12-ASN'] }}
+
+   neighbor LEAF34_Underlay peer group
+   neighbor LEAF34_Underlay send-community
+   neighbor LEAF34_Underlay maximum-routes 12000
+   neighbor LEAF34_Underlay remote-as {{ underlay[inventory_hostname]['BGP']['leaf34-ASN'] }}
+  
+   neighbor BORDERLEAF_Underlay peer group
+   neighbor BORDERLEAF_Underlay send-community
+   neighbor BORDERLEAF_Underlay maximum-routes 12000
+   neighbor BORDERLEAF_Underlay remote-as {{ underlay[inventory_hostname]['BGP']['borderleaf1-ASN'] }}
+   neighbor {{ underlay[inventory_hostname]['BGP']['borderleaf1-peer'] }} peer group BORDERLEAF_Underlay
+
+{% for peer in underlay[inventory_hostname]['BGP']['leaf12-peers'] %}
+   neighbor {{ peer }} peer group LEAF12_Underlay
+{% endfor %}   
+
+{% for peer in underlay[inventory_hostname]['BGP']['leaf34-peers'] %}
+   neighbor {{ peer }} peer group LEAF34_Underlay
+{% endfor %}
+
+   redistribute connected route-map LOOPBACK
+   
+   address-family ipv4
+     neighbor LEAF_Underlay activate
+     neighbor LEAF12_Underlay activate
+     neighbor LEAF34_Underlay activate
+     neighbor BORDERLEAF_Underlay activate
+     redistribute connected route-map LOOPBACK
