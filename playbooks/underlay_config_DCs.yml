@@ -9,10 +9,10 @@
   - name: Create Spine config
     template:
       src: "{{lookup('env','PWD')}}/templates/spine-underlay.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_spine-underlay.cfg"
+      dest: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"
   - name: Upload config
     eos_config:
-      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_spine-underlay.cfg"
+      src: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"
 - hosts: leafs
   gather_facts: no
   serial: 5
@@ -24,10 +24,10 @@
   - name: Create Leaf config
     template:
       src: "{{lookup('env','PWD')}}/templates/leaf-underlay.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
+      dest: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"
   - name: Upload config
     eos_config:
-      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_leaf-underlay.cfg"
+      src: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"
 - hosts: borderleafs
   gather_facts: no
   tasks:
@@ -38,10 +38,10 @@
   - name: Create Borderleaf config
     template:
       src: "{{lookup('env','PWD')}}/templates/borderleaf.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"
+      dest: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"
   - name: Upload config
     eos_config:
-      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_borderleaf-underlay.cfg"       
+      src: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"       
 - hosts: DCI
   gather_facts: no
   tasks:
@@ -52,7 +52,7 @@
   - name: Create DCI config
     template:
       src: "{{lookup('env','PWD')}}/templates/DCI-underlay.j2"
-      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_DCI-underlay.cfg"
+      dest: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"
   - name: Upload config
     eos_config:
-      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_DCI-underlay.cfg"       
+      src: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"       
