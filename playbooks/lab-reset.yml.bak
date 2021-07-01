@@ -1,0 +1,43 @@
+---
+- hosts: DC1 
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create DC1 config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/lab-reset.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_lab-reset.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_lab-reset.cfg"
+- hosts: DC2 
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create DC2 config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/lab-reset.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_lab-reset.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_lab-reset.cfg"
+- hosts: DCI 
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
+      name: underlay
+  - name: Create DCI config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/lab-reset.j2"
+      dest: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_lab-reset.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/{{inventory_hostname}}_lab-reset.cfg"

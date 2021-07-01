@@ -7,420 +7,433 @@ global:
 spine1-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.101
+      ipv4: 10.0.0.5
       mask: 32
     Ethernet2: 
-      ipv4: 192.168.103.1
+      ipv4: 172.16.15.1
       mask: 31
     Ethernet3: 
-      ipv4: 192.168.103.7
+      ipv4: 172.16.25.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.13
+      ipv4: 172.16.35.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.103.19
+      ipv4: 172.16.45.1
       mask: 31
     Ethernet6: 
-      ipv4: 192.168.103.25
+      ipv4: 172.16.58.0
       mask: 31
   BGP:
     ASN: 65100
 spine2-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.102
+      ipv4: 10.0.0.6
       mask: 32
     Ethernet2: 
-      ipv4: 192.168.103.3
+      ipv4: 172.16.16.1
       mask: 31
     Ethernet3: 
-      ipv4: 192.168.103.9
+      ipv4: 172.16.26.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.15
+      ipv4: 172.16.36.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.103.21
+      ipv4: 172.16.46.1
       mask: 31
     Ethernet6: 
-      ipv4: 192.168.103.27
+      ipv4: 172.16.68.0
       mask: 31
   BGP:
     ASN: 65100
 spine3-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.103
+      ipv4: 10.0.0.7
       mask: 32
     Ethernet2: 
-      ipv4: 192.168.103.5
+      ipv4: 172.16.17.1
       mask: 31
     Ethernet3: 
-      ipv4: 192.168.103.11
+      ipv4: 172.16.27.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.17
+      ipv4: 172.16.37.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.103.23
+      ipv4: 172.16.47.1
       mask: 31
     Ethernet6: 
-      ipv4: 192.168.103.29
+      ipv4: 172.16.78.0
       mask: 31
     Ethernet7: 
-      ipv4: 192.168.103.35
+      ipv4: 172.16.79.0
       mask: 31
   BGP:
     ASN: 65100
 leaf1-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.11
+      ipv4: 10.0.0.1
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.11
+      ipv4: 10.1.1.1
       mask: 32
     Ethernet3:
-      ipv4: 192.168.103.0
+      ipv4: 172.16.15.0
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.2
+      ipv4: 172.16.16.0
       mask: 31
   BGP: 
     ASN: 65101
     spine-peers:
-      - 192.168.103.1
-      - 192.168.103.3
+      - 172.16.15.1
+      - 172.16.16.1
     spine-ASN: 65100
   MLAG: Odd
 leaf2-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.12
+      ipv4: 10.0.0.2
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.11
+      ipv4: 10.1.1.2
       mask: 32
     Ethernet3:
-      ipv4: 192.168.103.6
+      ipv4: 172.16.25.0
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.8
+      ipv4: 172.16.26.0
       mask: 31
   BGP: 
     ASN: 65101
     spine-peers:
-      - 192.168.103.7
-      - 192.168.103.9
+      - 172.16.25.1
+      - 172.16.26.1
     spine-ASN: 65100
   MLAG: Even
 leaf3-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.13
+      ipv4: 10.0.0.3
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.13
+      ipv4: 10.1.1.3
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.103.12
+      ipv4: 172.16.35.0
       mask: 31
     Ethernet4:
-      ipv4: 192.168.103.14
+      ipv4: 172.16.36.0
       mask: 31
   BGP:
     ASN: 65102
     spine-peers:
-      - 192.168.103.13
-      - 192.168.103.15
+      - 172.16.35.1
+      - 172.16.36.1
     spine-ASN: 65100
   MLAG: Even
 leaf4-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.14
+      ipv4: 10.0.0.4
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.13
+      ipv4: 10.1.1.4
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.103.18
+      ipv4: 172.16.45.0
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.20
+      ipv4: 172.16.46.0
       mask: 31
   BGP:
     ASN: 65102
     spine-peers:
-      - 192.168.103.19
-      - 192.168.103.21
+      - 172.16.45.1
+      - 172.16.46.1
     spine-ASN: 65100
   MLAG: Odd
 borderleaf1-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.21
+      ipv4: 10.0.0.8
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.21
+      ipv4: 10.1.1.8
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.103.24
+      ipv4: 172.16.58.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.26
+      ipv4: 172.16.68.1
       mask: 31
     Ethernet12:
-      ipv4: 192.168.254.0
+      ipv4: 172.16.80.0
       mask: 31
   BGP:
     ASN: 65103
     spine-peers:
-      - 192.168.103.25
-      - 192.168.103.27
+      - 172.16.58.0
+      - 172.16.68.0
     spine-ASN: 65100
     DCI-peers:
-      - 192.168.254.1
+      - 172.16.80.1
   MLAG: Odd
 
 borderleaf2-DC1:
   interfaces:
     loopback0: 
-      ipv4: 192.168.101.21
+      ipv4: 10.0.0.9
       mask: 32
     loopback1: 
-      ipv4: 192.168.102.21
+      ipv4: 10.1.1.9
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.103.30
+      ipv4: 172.16.59.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.103.32
+      ipv4: 172.16.69.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.103.34
+      ipv4: 172.16.79.1
       mask: 31
     Ethernet12:
-      ipv4: 192.168.254.2
+      ipv4: 172.16.90.0
       mask: 31
   BGP:
     ASN: 65103
     spine-peers:
-      - 192.168.103.31
-      - 192.168.103.33
-      - 192.168.103.35
+      - 172.16.59.0
+      - 172.16.69.0
+      - 172.16.79.0
     spine-ASN: 65100
     DCI-peers:
-      - 192.168.254.3
+      - 172.16.90.1
   MLAG: Even
 
 spine1-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.101
+      ipv4: 10.0.0.15
       mask: 32
     Ethernet2: 
-      ipv4: 192.168.203.1
+      ipv4: 172.26.15.1
       mask: 31
     Ethernet3: 
-      ipv4: 192.168.203.7
+      ipv4: 172.26.25.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.13
+      ipv4: 172.26.35.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.203.19
+      ipv4: 172.26.45.1
       mask: 31
     Ethernet6: 
-      ipv4: 192.168.203.25
+      ipv4: 172.26.58.0
       mask: 31
   BGP:
     ASN: 65200
 spine2-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.102
+      ipv4: 10.0.0.16
       mask: 32
     Ethernet2: 
-      ipv4: 192.168.203.3
+      ipv4: 172.26.16.1
       mask: 31
     Ethernet3: 
-      ipv4: 192.168.203.9
+      ipv4: 172.26.26.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.15
+      ipv4: 172.26.36.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.203.21
+      ipv4: 172.26.46.1
       mask: 31
     Ethernet6: 
-      ipv4: 192.168.203.27
+      ipv4: 172.26.68.0
       mask: 31
   BGP:
     ASN: 65200
 spine3-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.103
+      ipv4: 10.0.0.17
       mask: 32
     Ethernet2: 
-      ipv4: 192.168.203.5
+      ipv4: 172.26.17.1
       mask: 31
     Ethernet3: 
-      ipv4: 192.168.203.11
+      ipv4: 172.26.27.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.17
+      ipv4: 172.26.37.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.203.23
+      ipv4: 172.26.47.1
       mask: 31
     Ethernet6: 
-      ipv4: 192.168.203.29
+      ipv4: 172.26.78.0
       mask: 31
     Ethernet7: 
-      ipv4: 192.168.203.35
+      ipv4: 172.26.79.0
       mask: 31
   BGP:
     ASN: 65200
 leaf1-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.11
+      ipv4: 10.0.0.11
       mask: 32
     loopback1: 
-      ipv4: 192.168.202.11
+      ipv4: 10.1.1.11
       mask: 32
     Ethernet3:
-      ipv4: 192.168.203.0
+      ipv4: 172.26.15.0
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.2
+      ipv4: 172.26.16.0
       mask: 31
   BGP: 
     ASN: 65201
     spine-peers:
-      - 192.168.203.1
-      - 192.168.203.3
+      - 172.26.15.1
+      - 172.26.16.1
     spine-ASN: 65200
   MLAG: Odd
 leaf2-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.12
+      ipv4: 10.0.0.12
       mask: 32
     loopback1: 
-      ipv4: 192.168.202.11
+      ipv4: 10.1.1.12
       mask: 32
     Ethernet3:
-      ipv4: 192.168.203.6
+      ipv4: 172.26.25.0
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.8
+      ipv4: 172.26.26.0
       mask: 31
   BGP: 
     ASN: 65201
     spine-peers:
-      - 192.168.203.7
-      - 192.168.203.9
+      - 172.26.25.1
+      - 172.26.26.1
     spine-ASN: 65200
   MLAG: Even
 leaf3-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.13
+      ipv4: 10.0.0.13
       mask: 32
     loopback1: 
-      ipv4: 192.168.202.13
+      ipv4: 10.1.1.13
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.203.12
+      ipv4: 172.26.35.0
       mask: 31
     Ethernet4:
-      ipv4: 192.168.203.14
+      ipv4: 172.26.36.0
       mask: 31
   BGP:
     ASN: 65202
     spine-peers:
-      - 192.168.203.13
-      - 192.168.203.15
+      - 172.26.35.1
+      - 172.26.36.1
     spine-ASN: 65200
   MLAG: Odd
 leaf4-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.14
+      ipv4: 10.0.0.14
       mask: 32
     loopback1: 
-      ipv4: 192.168.202.13
+      ipv4: 10.1.1.14
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.203.18
+      ipv4: 172.26.45.0
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.20
+      ipv4: 172.26.46.0
       mask: 31
   BGP:
     ASN: 65202
     spine-peers:
-      - 192.168.203.19
-      - 192.168.203.21
+      - 172.26.45.1
+      - 172.26.46.1
     spine-ASN: 65200
   MLAG: Even
 borderleaf1-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.21
+      ipv4: 10.0.0.18
       mask: 32
     loopback1: 
-      ipv4: 192.168.202.21
+      ipv4: 10.1.1.18
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.203.24
+      ipv4: 172.26.58.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.26
+      ipv4: 172.26.68.1
       mask: 31
     Ethernet12:
-      ipv4: 192.168.254.4
+      ipv4: 172.26.80.0
       mask: 31
   BGP:
     ASN: 65203
     spine-peers:
-      - 192.168.203.25
-      - 192.168.203.27
+      - 172.26.58.0
+      - 172.26.68.0
     spine-ASN: 65200
     DCI-peers:
-      - 192.168.254.5
+      - 172.26.80.1
   MLAG: Odd
 borderleaf2-DC2:
   interfaces:
     loopback0: 
-      ipv4: 192.168.201.21
+      ipv4: 10.0.0.19
       mask: 32
     loopback1: 
-      ipv4: 192.168.202.21
+      ipv4: 10.1.1.19
       mask: 32
     Ethernet3: 
-      ipv4: 192.168.203.30
+      ipv4: 172.26.59.1
       mask: 31
     Ethernet4: 
-      ipv4: 192.168.203.32
+      ipv4: 172.26.69.1
       mask: 31
     Ethernet5: 
-      ipv4: 192.168.203.34
+      ipv4: 172.26.79.1
       mask: 31
     Ethernet12:
-      ipv4: 192.168.254.6
+      ipv4: 172.26.90.0
       mask: 31
   BGP:
     ASN: 65203
     spine-peers:
-      - 192.168.203.31
-      - 192.168.203.33
-      - 192.168.203.35
+      - 172.26.59.0
+      - 172.26.69.0
+      - 172.26.79.0
     spine-ASN: 65200
     DCI-peers:
-    - 192.168.254.7
+      - 172.26.90.1
   MLAG: Even
+DCI:
+  interfaces:
+    loopback0: 
+      ipv4: 10.0.0.20
+      mask: 32
+    Ethernet1: 
+      ipv4: 172.16.80.1
+      mask: 31
+    Ethernet3: 
+      ipv4: 172.26.80.1
+      mask: 31
+  BGP:
+    ASN: 65000

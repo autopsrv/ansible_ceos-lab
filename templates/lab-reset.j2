@@ -1,0 +1,21 @@
+service routing protocols model multi-agent
+ip routing
+
+{% for item in underlay[inventory_hostname]['interfaces'] %}
+   {% if 'Ethernet' in item %}
+   interface {{ item }}
+      no ip address
+      no switchport
+      no mtu
+   {% else %}
+   no interface {{ item }}
+   {% endif %}
+{% endfor %}
+
+no ip prefix-list LOOPBACK
+
+no route-map LOOPBACK permit 10
+
+no peer-filter LEAF-AS-RANGE
+
+no router bgp

@@ -424,3 +424,16 @@ borderleaf2-DC2:
     DCI-peers:
     - 192.168.254.7
   MLAG: Even
+DCI:
+  interfaces:
+    loopback0: 
+      ipv4: 192.168.253.1
+      mask: 32
+    Ethernet1: 
+      ipv4: 192.168.254.1
+      mask: 31
+    Ethernet3: 
+      ipv4: 192.168.254.5
+      mask: 31
+  BGP:
+    ASN: 65000
