@@ -5,8 +5,8 @@
   tasks:
   - name: Register variables
     include_vars:
-      file: "{{lookup('env','PWD')}}/vars/underlay-DCs.yml"
-      name: underlay
+      file: "{{lookup('env','PWD')}}/vars/overlay-DCs.yml"
+      name: overlay
   - name: Create lab-reset config
     template:
       src: "{{lookup('env','PWD')}}/templates/lab-reset.j2"

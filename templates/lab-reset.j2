@@ -1,7 +1,7 @@
 service routing protocols model multi-agent
 ip routing
 
-{% for item in underlay[inventory_hostname]['interfaces'] %}
+{% for item in overlay[inventory_hostname]['interfaces'] %}
    {% if 'Ethernet' in item %}
    interface {{ item }}
       no ip address

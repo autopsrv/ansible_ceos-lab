@@ -1,5 +1,5 @@
 ---
-- hosts: leaf1-DC1
+- hosts: borderleaf1-DC2
   gather_facts: no
   serial: 5
   tasks:

@@ -3,8 +3,15 @@
     gather_facts: no
     serial: 5
     tasks:
+    - name: Add User
+      eos_user:
+        name: automator
+        privilege: 15
+        role: network-admin
+        nopassword: yes
+        state: present
     - name: Add SSH key
       eos_user:
-        name: arista
+        name: automator
         sshkey: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
         state: present

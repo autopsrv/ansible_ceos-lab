@@ -73,8 +73,9 @@ router bgp {{ overlay[inventory_hostname]['BGP']['ASN'] }}
    address-family ipv4
      neighbor SPINE_Underlay activate
      neighbor LEAF_Peer activate
+{% if inventory_hostname == 'leaf1-DC1' or inventory_hostname == 'leaf1-DC2' %}
+     network {{overlay[inventory_hostname]['BGP']['v4net']}}
 
-{% if overlay[inventory_hostname]['BGP']['vrf'] == True %}
    vrf tenant-{{ overlay[inventory_hostname]['interfaces']['Vxlan1']['vrf'] }}
       rd {{ overlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}:{{ overlay[inventory_hostname]['interfaces']['Vxlan1']['vni'] }}
       route-target import evpn {{ overlay[inventory_hostname]['interfaces']['Vxlan1']['vni'] }}:1
