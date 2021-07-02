@@ -48,4 +48,5 @@ router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
    address-family ipv4
      neighbor SPINE_Underlay activate
      neighbor LEAF_Peer activate
-     redistribute connected route-map LOOPBACK
+     network {{ underlay[inventory_hostname]['BGP']['v4net'] }}
+

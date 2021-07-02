@@ -1,0 +1,85 @@
+service routing protocols model multi-agent
+
+{% for item in overlay[inventory_hostname]['interfaces'] %}
+interface {{ item }}
+{% if 'Vxlan' in item %}
+    vxlan source-interface Loopback0
+    vxlan vrf tenant-{{ overlay[inventory_hostname]['interfaces'][item]['vrf'] }} vni {{ overlay[inventory_hostname]['interfaces'][item]['vni'] }}
+interface {{ overlay[inventory_hostname]['interfaces'][item]['interface']}}
+    no switchport
+    mtu {{ overlay['global']['MTU'] }}
+    vrf tenant-{{ overlay[inventory_hostname]['interfaces'][item]['vrf'] }}
+    ip address {{ overlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ overlay[inventory_hostname]['interfaces'][item]['mask']}}
+
+vrf instance tenant-{{ overlay[inventory_hostname]['interfaces'][item]['vrf'] }}
+
+{% elif 'Ethernet' in item %}
+    no switchport
+    mtu {{ overlay['global']['MTU'] }}
+    ip address {{ overlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ overlay[inventory_hostname]['interfaces'][item]['mask']}}
+{% else %}
+    ip address {{ overlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ overlay[inventory_hostname]['interfaces'][item]['mask']}}
+{% endif %}
+{% endfor %}
+
+ip prefix-list LOOPBACK
+    seq 10 permit 10.0.0.0/24 eq 32
+    seq 20 permit 10.1.1.0/24 eq 32
+
+route-map LOOPBACK permit 10
+   match ip address prefix-list LOOPBACK
+
+router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
+   router-id {{ underlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}
+
+   no bgp default ipv4-unicast
+   maximum-paths 3
+   distance bgp 20 200 200
+
+   neighbor EVPN-OVERLAY peer group
+   neighbor EVPN-OVERLAY remote-as {{ underlay[inventory_hostname]['BGP']['spine-ASN'] }}
+   neighbor EVPN-OVERLAY update-source Loopback0
+   neighbor EVPN-OVERLAY ebgp-multihop
+   neighbor EVPN-OVERLAY send-community
+   neighbor EVPN-OVERLAY maximum-routes 0
+
+   neighbor SPINE_Underlay peer group  
+   neighbor SPINE_Underlay remote-as {{ underlay[inventory_hostname]['BGP']['spine-ASN'] }}
+   neighbor SPINE_Underlay send-community
+   neighbor SPINE_Underlay maximum-routes 12000
+
+   neighbor LEAF_Peer peer group
+   neighbor LEAF_Peer remote-as {{ underlay[inventory_hostname]['BGP']['ASN'] }}
+   neighbor LEAF_Peer next-hop-self
+   neighbor LEAF_Peer maximum-routes 12000
+
+{% for peer in underlay[inventory_hostname]['BGP']['spine-ol-peers'] %}
+   neighbor {{ peer }} peer group EVPN-OVERLAY
+{% endfor %}   
+{% for peer in underlay[inventory_hostname]['BGP']['spine-peers'] %}
+   neighbor {{ peer }} peer group SPINE_Underlay
+{% endfor %}   
+{% if underlay[inventory_hostname]['MLAG'] == "Odd" %}
+   neighbor 192.168.255.2 peer group LEAF_Peer
+   {% else %}
+   neighbor 192.168.255.1 peer group LEAF_Peer
+{% endif %}
+   
+   redistribute connected route-map LOOPBACK
+   address-family evpn
+      bgp next-hop-unchanged
+      neighbor EVPN-OVERLAY activate
+
+   address-family ipv4
+     neighbor SPINE_Underlay activate
+     neighbor LEAF_Peer activate
+     network {{ underlay[inventory_hostname]['BGP']['v4net'] }}
+
+{% if underlay[inventory_hostname]['BGP']['vrf'] == True %}
+   vrf tenant-{{ underlay[inventory_hostname]['interfaces']['Vxlan1'['vrf'] }}
+      rd {{ underlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}:{{ underlay[inventory_hostname]['interfaces']['Vxlan1'['vni'] }}
+      route-target import evpn {{ underlay[inventory_hostname]['interfaces']['Vxlan1'['vni'] }}:1
+      route-target export evpn {{ underlay[inventory_hostname]['interfaces']['Vxlan1'['vni'] }}:1
+      redistribute connected
+      redistribute static
+{% endif %}

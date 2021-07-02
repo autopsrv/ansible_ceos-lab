@@ -1,0 +1,48 @@
+service routing protocols model multi-agent
+
+{% for item in overlay[inventory_hostname]['interfaces'] %}
+interface {{ item }}
+   ip address {{ overlay[inventory_hostname]['interfaces'][item]['ipv4']}}/{{ overlay[inventory_hostname]['interfaces'][item]['mask']}}
+{% if 'Ethernet' in item %}
+   no switchport
+   mtu {{ overlay['global']['MTU'] }}
+{% endif %}
+{% endfor %}
+
+ip prefix-list LOOPBACK
+    seq 11 permit 10.0.0.0/24 eq 32
+    seq 11 permit 10.1.1.0/24 eq 32
+
+route-map LOOPBACK permit 10
+   match ip address prefix-list LOOPBACK
+
+peer-filter LEAF-AS-RANGE
+ 10 match as-range 65000-65535 result accept
+
+router bgp {{ overlay[inventory_hostname]['BGP']['ASN'] }}
+   router-id {{ overlay[inventory_hostname]['interfaces']['loopback0']['ipv4']}}
+   no bgp default ipv4-unicast
+   maximum-paths 3
+   distance bgp 20 200 200
+
+   bgp listen range 10.0.0.0/24 peer-group DCI_OVERLAY peer-filter LEAF-AS-RANGE
+   bgp listen range 172.0.0.0/8 peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+   neighbor DCI_OVERLAY peer group
+   neighbor DCI_OVERLAY update-source Loopback0
+   neighbor DCI_OVERLAY ebgp-multihop
+   neighbor DCI_OVERLAY send-community
+   neighbor DCI_OVERLAY maximum-routes 0
+
+   neighbor LEAF_Underlay peer group
+   neighbor LEAF_Underlay send-community
+   neighbor LEAF_Underlay maximum-routes 12000
+
+   redistribute connected route-map LOOPBACK
+   
+   address-family evpn
+      bgp next-hop-unchanged
+      neighbor DCI_OVERLAY activate
+
+   address-family ipv4
+     neighbor LEAF_Underlay activate
+

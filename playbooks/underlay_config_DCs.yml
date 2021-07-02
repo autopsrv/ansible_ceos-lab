@@ -37,7 +37,7 @@
       name: underlay
   - name: Create Borderleaf config
     template:
-      src: "{{lookup('env','PWD')}}/templates/borderleaf.j2"
+      src: "{{lookup('env','PWD')}}/templates/borderleaf-underlay.j2"
       dest: "{{lookup('env','PWD')}}/configs/underlay_{{inventory_hostname}}.cfg"
   - name: Upload config
     eos_config:

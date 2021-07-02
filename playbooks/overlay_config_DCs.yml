@@ -1,0 +1,58 @@
+---
+- hosts: spines
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/overlay-DCs.yml"
+      name: overlay
+  - name: Create Spine config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/spine-overlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"
+- hosts: leafs
+  gather_facts: no
+  serial: 5
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/overlay-DCs.yml"
+      name: overlay
+  - name: Create Leaf config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/leaf-overlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"
+- hosts: borderleafs
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/overlay-DCs.yml"
+      name: overlay
+  - name: Create Borderleaf config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/borderleaf-overlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"       
+- hosts: DCI
+  gather_facts: no
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/overlay-DCs.yml"
+      name: overlay
+  - name: Create DCI config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/DCI-overlay.j2"
+      dest: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"       
