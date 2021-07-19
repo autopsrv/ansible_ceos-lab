@@ -33,11 +33,11 @@ arista.eos                    2.1.2
 - [ansible.cfg](https://github.com/autopsrv/ansible_docker-topo/blob/main/ansible.cfg): Ansible configuration file.
 - [hosts.ini](https://github.com/autopsrv/ansible_docker-topo/blob/main/hosts.ini): Ansible inventory file.
 - [overlay-DCs.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/vars/overlay-DCs.yml): includes underlay & overlay network variables declared for individual switch, will be loaded by playbook automatically.
-- [leaf-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/leaf-overlay.j2): a template to generate leaf configuration automatically.
-- [borderleaf-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/borderleaf-overlay.j2): a template to generate borderleaf configuration automatically.
-- [spine-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/spine-overlay.j2): a template to generate borderleaf configuration automatically.
-- [DCI-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/DCI-overlay.j2): a template to generate DCI configuration automatically.
-- [lab-reset.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/lab-reset.j2): a template to reset lab environment.
+- [leaf-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/leaf-overlay.j2): a template to generate leaf configuration.
+- [borderleaf-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/borderleaf-overlay.j2): a template to generate borderleaf configuration.
+- [spine-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/spine-overlay.j2): a template to generate borderleaf configuration.
+- [DCI-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/DCI-overlay.j2): a template to generate DCI configuration.
+- [lab-reset.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/lab-reset.j2): a template to generate lab-reset configuration.
 - [overlay_config_DCs.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/overlay_config_DCs.yml): a playbook file to configure and deploy EVPN/VXLAN overlay & EBGP underlay networks.
 - [lab-reset.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/lab-reset.yml): a playbook file to reset lab environment.
 - [add_ssh_key.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/add_ssh_key.yml)a playbook file to set SSH key.
