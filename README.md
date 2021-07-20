@@ -40,6 +40,7 @@ arista.eos                    2.1.2
 - [lab-reset.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/lab-reset.j2): a template to generate lab-reset configuration.
 - [overlay_config_DCs.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/overlay_config_DCs.yml): a playbook file to configure and deploy EVPN/VXLAN overlay & EBGP underlay networks.
 - [lab-reset.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/lab-reset.yml): a playbook file to reset lab environment.
+- [backup.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/backup.yml): a playbook file to create a full backup of running-config.
 - [add_ssh_key.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/add_ssh_key.yml): a playbook file to set SSH key.
 ### Ansible for Provisioning
 #### EVPN/VXLAN overlay & EBGP underlay networks deployment
@@ -214,6 +215,10 @@ Create DCI config ------------------------------------------------------- 0.72s
 #### Reset Lab Env
 ```
 # ansible-playbook playbooks/lab-reset.yml
+```
+#### Backup running-config files
+```
+# ansible-playbook playbooks/backup.yml
 ```
 #### Set SSH key
 ```
