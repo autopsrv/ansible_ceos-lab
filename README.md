@@ -2,7 +2,7 @@
 ### Lab Topology
 ![alt text](https://github.com/autopsrv/ansible_docker-topo/blob/main/topo.jpeg?raw=true)
 
-> Note: use [docker-topo](https://github.com/networkop/docker-topo/) to build lab topology.
+> Note: use [docker-topo](https://github.com/networkop/docker-topo/) to build lab topology and intftype of ceos-lab set to 'et'.
 ### Laptop Environment:
 ```
 # python3 -V
