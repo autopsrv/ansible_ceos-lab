@@ -46,143 +46,170 @@ arista.eos                    2.1.2
 ```
 # ansible-playbook playbooks/overlay_config_DCs.yml 
 
-PLAY [spines] ***************************************************************************************************************************************************************************
+PLAY [leaf1-DC1,leaf1-DC2] *****************************************************
 
-TASK [Register variables] ***************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:00:17 +0800 (0:00:00.020)       0:00:00.020 ********** 
-ok: [spine2-DC1]
-ok: [spine1-DC1]
-ok: [spine1-DC2]
+TASK [Register variables] ******************************************************
+Tuesday 20 July 2021  15:52:52 +0800 (0:00:00.018)       0:00:00.018 ********** 
+ok: [leaf1-DC2]
+ok: [leaf1-DC1]
+
+TASK [Create leaf1-DCs lab-reset config] ***************************************
+Tuesday 20 July 2021  15:52:53 +0800 (0:00:01.264)       0:00:01.284 ********** 
+ok: [leaf1-DC2]
+ok: [leaf1-DC1]
+
+TASK [Upload config] ***********************************************************
+Tuesday 20 July 2021  15:52:56 +0800 (0:00:02.914)       0:00:04.199 ********** 
+[WARNING]: To ensure idempotency and correct diff the input configuration lines
+should be similar to how they appear if present in the running configuration on
+device including the indentation
+changed: [leaf1-DC1]
+changed: [leaf1-DC2]
+
+PLAY [spines] ******************************************************************
+
+TASK [Register variables] ******************************************************
+Tuesday 20 July 2021  15:53:03 +0800 (0:00:06.878)       0:00:11.077 ********** 
 ok: [spine2-DC2]
+ok: [spine1-DC1]
+ok: [spine2-DC1]
+ok: [spine1-DC2]
 
-TASK [Create Spine config] **************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:00:21 +0800 (0:00:04.382)       0:00:04.404 ********** 
+TASK [Create Spine config] *****************************************************
+Tuesday 20 July 2021  15:53:08 +0800 (0:00:04.913)       0:00:15.992 ********** 
 changed: [spine1-DC1]
 changed: [spine1-DC2]
 changed: [spine2-DC2]
 changed: [spine2-DC1]
 
-TASK [Upload config] ********************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:00:27 +0800 (0:00:05.904)       0:00:10.309 ********** 
-ok: [spine2-DC1]
-ok: [spine1-DC2]
-ok: [spine2-DC2]
-ok: [spine1-DC1]
+TASK [Upload config] ***********************************************************
+Tuesday 20 July 2021  15:53:13 +0800 (0:00:05.589)       0:00:21.581 ********** 
+changed: [spine1-DC1]
+changed: [spine2-DC1]
+changed: [spine1-DC2]
+changed: [spine2-DC2]
 
-PLAY [leafs] ****************************************************************************************************************************************************************************
+PLAY [leafs] *******************************************************************
 
-TASK [Register variables] ***************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:00:37 +0800 (0:00:10.472)       0:00:20.783 ********** 
+TASK [Register variables] ******************************************************
+Tuesday 20 July 2021  15:53:27 +0800 (0:00:13.584)       0:00:35.167 ********** 
 ok: [borderleaf1-DC1]
-ok: [leaf4-DC1]
 ok: [leaf2-DC1]
 ok: [leaf1-DC1]
 ok: [leaf3-DC1]
+ok: [leaf4-DC1]
 
-TASK [Create Leaf config] ***************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:00:46 +0800 (0:00:08.137)       0:00:28.922 ********** 
-changed: [leaf3-DC1]
-changed: [leaf2-DC1]
+TASK [Create Leaf config] ******************************************************
+Tuesday 20 July 2021  15:53:36 +0800 (0:00:08.964)       0:00:44.133 ********** 
+changed: [leaf4-DC1]
 changed: [leaf1-DC1]
+changed: [leaf2-DC1]
+changed: [leaf3-DC1]
+changed: [borderleaf1-DC1]
+
+TASK [Upload config] ***********************************************************
+Tuesday 20 July 2021  15:53:43 +0800 (0:00:07.327)       0:00:51.461 ********** 
+changed: [leaf2-DC1]
+changed: [leaf3-DC1]
 changed: [leaf4-DC1]
 changed: [borderleaf1-DC1]
+changed: [leaf1-DC1]
 
-TASK [Upload config] ********************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:00:53 +0800 (0:00:07.098)       0:00:36.021 ********** 
-ok: [leaf2-DC1]
-ok: [leaf1-DC1]
-ok: [leaf3-DC1]
-ok: [leaf4-DC1]
-ok: [borderleaf1-DC1]
+PLAY [leafs] *******************************************************************
 
-PLAY [leafs] ****************************************************************************************************************************************************************************
-
-TASK [Register variables] ***************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:07 +0800 (0:00:14.129)       0:00:50.153 ********** 
-ok: [leaf1-DC2]
+TASK [Register variables] ******************************************************
+Tuesday 20 July 2021  15:54:02 +0800 (0:00:18.587)       0:01:10.052 ********** 
 ok: [leaf4-DC2]
 ok: [borderleaf1-DC2]
-ok: [leaf2-DC2]
 ok: [leaf3-DC2]
+ok: [leaf1-DC2]
+ok: [leaf2-DC2]
 
-TASK [Create Leaf config] ***************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:18 +0800 (0:00:11.404)       0:01:01.559 ********** 
-changed: [leaf2-DC2]
+TASK [Create Leaf config] ******************************************************
+Tuesday 20 July 2021  15:54:12 +0800 (0:00:09.758)       0:01:19.812 ********** 
 changed: [leaf3-DC2]
-changed: [leaf1-DC2]
 changed: [leaf4-DC2]
+changed: [leaf2-DC2]
 changed: [borderleaf1-DC2]
+changed: [leaf1-DC2]
 
-TASK [Upload config] ********************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:25 +0800 (0:00:07.121)       0:01:08.681 ********** 
-ok: [borderleaf1-DC2]
-ok: [leaf1-DC2]
-ok: [leaf2-DC2]
-ok: [leaf4-DC2]
-ok: [leaf3-DC2]
+TASK [Upload config] ***********************************************************
+Tuesday 20 July 2021  15:54:19 +0800 (0:00:07.624)       0:01:27.437 ********** 
+changed: [leaf3-DC2]
+changed: [leaf4-DC2]
+changed: [leaf2-DC2]
+changed: [borderleaf1-DC2]
+changed: [leaf1-DC2]
 
-PLAY [borderleafs] **********************************************************************************************************************************************************************
+PLAY [borderleafs] *************************************************************
 
-TASK [Register variables] ***************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:38 +0800 (0:00:12.970)       0:01:21.655 ********** 
+TASK [Register variables] ******************************************************
+Tuesday 20 July 2021  15:54:39 +0800 (0:00:19.759)       0:01:47.199 ********** 
 ok: [borderleaf1-DC1]
 ok: [borderleaf1-DC2]
 
-TASK [Create Borderleaf config] *********************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:42 +0800 (0:00:03.919)       0:01:25.576 ********** 
-changed: [borderleaf1-DC2]
+TASK [Create Borderleaf config] ************************************************
+Tuesday 20 July 2021  15:54:43 +0800 (0:00:03.776)       0:01:50.976 ********** 
 changed: [borderleaf1-DC1]
+changed: [borderleaf1-DC2]
 
-TASK [Upload config] ********************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:45 +0800 (0:00:02.308)       0:01:27.885 ********** 
-ok: [borderleaf1-DC2]
-ok: [borderleaf1-DC1]
+TASK [Upload config] ***********************************************************
+Tuesday 20 July 2021  15:54:46 +0800 (0:00:02.970)       0:01:53.947 ********** 
+changed: [borderleaf1-DC1]
+changed: [borderleaf1-DC2]
 
-PLAY [DCI] *******************************************************************************************************************************************************************
+PLAY [DCI] *********************************************************************
 
-TASK [Register variables] *******************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:49 +0800 (0:00:04.200)       0:01:32.085 ********** 
+TASK [Register variables] ******************************************************
+Tuesday 20 July 2021  15:54:53 +0800 (0:00:06.871)       0:02:00.819 ********** 
 ok: [DCI]
 
-TASK [Create DCI config] *******************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:50 +0800 (0:00:00.944)       0:01:33.029 ********** 
+TASK [Create DCI config] *******************************************************
+Tuesday 20 July 2021  15:54:54 +0800 (0:00:01.410)       0:02:02.230 ********** 
 changed: [DCI]
 
-TASK [Upload config] *******************************************************************************************************************************************************************
-Tuesday 20 July 2021  00:01:50 +0800 (0:00:00.717)       0:01:33.747 ********** 
-ok: [DCI]
+TASK [Upload config] ***********************************************************
+Tuesday 20 July 2021  15:54:55 +0800 (0:00:00.716)       0:02:02.947 ********** 
+changed: [DCI]
 
-PLAY RECAP *******************************************************************************************************************************************************************
-DCI                        : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-borderleaf1-DC1            : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-borderleaf1-DC2            : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf1-DC1                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf1-DC2                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf2-DC1                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf2-DC2                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf3-DC1                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf3-DC2                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf4-DC1                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf4-DC2                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-spine1-DC1                 : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-spine1-DC2                 : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-spine2-DC1                 : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-spine2-DC2                 : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+PLAY RECAP *********************************************************************
+DCI                        : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+borderleaf1-DC1            : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+borderleaf1-DC2            : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf1-DC1                  : ok=6    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf1-DC2                  : ok=6    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf2-DC1                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf2-DC2                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf3-DC1                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf3-DC2                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf4-DC1                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf4-DC2                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine1-DC1                 : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine1-DC2                 : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine2-DC1                 : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine2-DC2                 : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
-Tuesday 20 July 2021  00:01:54 +0800 (0:00:03.667)       0:01:37.415 ********** 
+Tuesday 20 July 2021  15:55:02 +0800 (0:00:07.130)       0:02:10.077 ********** 
 =============================================================================== 
-Upload config ----------------------------------------------------------------------------- 12.98s
-Register variables ------------------------------------------------------------------------ 11.40s
-Upload config ----------------------------------------------------------------------------- 10.47s
-Create Leaf config ------------------------------------------------------------------------- 7.12s
-Create Spine config ------------------------------------------------------------------------ 5.90s
-Register variables ------------------------------------------------------------------------- 4.39s
-Upload config ------------------------------------------------------------------------------ 4.20s
-Register variables ------------------------------------------------------------------------- 3.92s
-Upload config ------------------------------------------------------------------------------ 3.67s
-Create Borderleaf config ------------------------------------------------------------------- 2.31s
-Register variables ------------------------------------------------------------------------- 0.94s
-Create DCI config -------------------------------------------------------------------------- 0.72s
+Upload config ---------------------------------------------------------- 19.76s
+Upload config ---------------------------------------------------------- 13.59s
+Register variables ------------------------------------------------------ 9.76s
+Create Leaf config ------------------------------------------------------ 7.62s
+Upload config ----------------------------------------------------------- 7.13s
+Upload config ----------------------------------------------------------- 6.88s
+Upload config ----------------------------------------------------------- 6.87s
+Create Spine config ----------------------------------------------------- 5.59s
+Register variables ------------------------------------------------------ 4.92s
+Register variables ------------------------------------------------------ 3.78s
+Create Borderleaf config ------------------------------------------------ 2.97s
+Create leaf1-DCs lab-reset config --------------------------------------- 2.91s
+Register variables ------------------------------------------------------ 1.41s
+Register variables ------------------------------------------------------ 1.27s
+Create DCI config ------------------------------------------------------- 0.72s
+```
+#### EBGP underlay deployment
+```
+# ansible-playbook playbooks/underlay_config_DCs.yml
 ```
 #### Reset Lab Env
 ```
