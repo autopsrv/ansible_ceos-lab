@@ -1,5 +1,5 @@
 ---
-- hosts: borderleaf1-DC2
+- hosts: spine2-DC1
   gather_facts: no
   serial: 5
   tasks:
@@ -9,7 +9,7 @@
       name: overlay
   - name: Create Leaf config
     template:
-      src: "{{lookup('env','PWD')}}/templates/leaf-overlay.j2"
+      src: "{{lookup('env','PWD')}}/templates/spine-overlay.j2"
       dest: "{{lookup('env','PWD')}}/configs/overlay_{{inventory_hostname}}.cfg"
   - name: Upload config
     eos_config:

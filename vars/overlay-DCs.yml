@@ -87,14 +87,11 @@ leaf1-DC1:
     Ethernet4: 
       ipv4: 172.16.16.0
       mask: 31
-    Ethernet6: 
-      ipv4: 192.168.100.1
-      mask: 24
     Vxlan1:
       vrf: 100
       vni: 10200
-      interface: Ethernet7
-      ipv4: 192.168.101.1
+      interface: Ethernet6
+      ipv4: 192.168.100.1
       mask: 24
   BGP: 
     ASN: 65101
@@ -331,14 +328,11 @@ leaf1-DC2:
     Ethernet4: 
       ipv4: 172.26.16.0
       mask: 31
-    Ethernet6: 
-      ipv4: 192.168.200.1
-      mask: 24
     Vxlan1:
       vrf: 200
       vni: 10200
-      interface: Ethernet7
-      ipv4: 192.168.201.1
+      interface: Ethernet6
+      ipv4: 192.168.200.1
       mask: 24
   BGP: 
     ASN: 65201

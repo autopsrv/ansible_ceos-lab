@@ -48,5 +48,8 @@ router bgp {{ underlay[inventory_hostname]['BGP']['ASN'] }}
    address-family ipv4
      neighbor SPINE_Underlay activate
      neighbor LEAF_Peer activate
+
+{% if inventory_hostname == 'leaf1-DC1' or inventory_hostname == 'leaf1-DC2' %}
      network {{ underlay[inventory_hostname]['BGP']['v4net'] }}
+{% endif %}
 

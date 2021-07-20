@@ -1,0 +1,78 @@
+! Command: show running-config
+! device: DCI (cEOSLab, EOS-4.26.0.1F-21994874.42601F (engineering build))
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+agent Bfd shutdown
+agent PowerManager shutdown
+agent LedPolicy shutdown
+agent Thermostat shutdown
+agent PowerFuse shutdown
+agent StandbyCpld shutdown
+agent LicenseManager shutdown
+!
+hostname DCI
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username arista privilege 15 secret sha512 $6$C8hU84mhFEN4i43s$3/pE4pEyTYVyKZU1kDO1NodrleHHGM6FvNxNQRHX2JB3YU24IgQp5UMBFjPl/ENh3bkYaASE3AmRgaxnjq37.1
+username arista ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLCjB+aSphex7Q1AOiZWoPa/yGQ60+GDxoanRKFLUz8VJOQVrgrIShnVOFIKaz3Ymn5y0O31DlRROHpa7/mUY06UjO1ykLKHy2pUsPtdVaKBan5QJ4CNK7SzjMX/epfq7M5BkHesJchMmoS9uANN+sT9lmFDPxVJZC04aYcRwZ4/0PgD72hhbwgTivkZvM471PTa+e9RCamJ3h2TeQmVTvTt5H63xmtkuKAhL03btAq2wbhxmoq9ub2WTVQi4oRNBnkG2MbnMpGIQ2KyAs+OhagRRJr8Iq7NtKWJgYJCHM+UNuZx/iIJahfH2w78hzTkfNVxSngv33WzHjHxAOts+z root@ubuntu
+username automator privilege 15 role network-admin nopassword
+username automator ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLCjB+aSphex7Q1AOiZWoPa/yGQ60+GDxoanRKFLUz8VJOQVrgrIShnVOFIKaz3Ymn5y0O31DlRROHpa7/mUY06UjO1ykLKHy2pUsPtdVaKBan5QJ4CNK7SzjMX/epfq7M5BkHesJchMmoS9uANN+sT9lmFDPxVJZC04aYcRwZ4/0PgD72hhbwgTivkZvM471PTa+e9RCamJ3h2TeQmVTvTt5H63xmtkuKAhL03btAq2wbhxmoq9ub2WTVQi4oRNBnkG2MbnMpGIQ2KyAs+OhagRRJr8Iq7NtKWJgYJCHM+UNuZx/iIJahfH2w78hzTkfNVxSngv33WzHjHxAOts+z root@ubuntu
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 172.16.80.1/31
+!
+interface Ethernet3
+   mtu 9214
+   no switchport
+   ip address 172.26.80.1/31
+!
+interface Loopback0
+   ip address 10.0.0.20/32
+!
+interface Management0
+   ip address 172.100.0.220/16
+!
+ip routing
+!
+ip prefix-list LOOPBACK
+   seq 11 permit 10.0.0.0/24 eq 32
+!
+route-map LOOPBACK permit 10
+   match ip address prefix-list LOOPBACK
+!
+peer-filter LEAF-AS-RANGE
+   10 match as-range 65000-65535 result accept
+!
+router bgp 65000
+   router-id 10.0.0.20
+   no bgp default ipv4-unicast
+   distance bgp 20 200 200
+   maximum-paths 3
+   bgp listen range 10.0.0.0/24 peer-group DCI_OVERLAY peer-filter LEAF-AS-RANGE
+   bgp listen range 172.0.0.0/8 peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+   neighbor DCI_OVERLAY peer group
+   neighbor DCI_OVERLAY update-source Loopback0
+   neighbor DCI_OVERLAY ebgp-multihop
+   neighbor DCI_OVERLAY send-community
+   neighbor DCI_OVERLAY maximum-routes 0
+   neighbor LEAF_Underlay peer group
+   neighbor LEAF_Underlay send-community
+   neighbor LEAF_Underlay maximum-routes 12000
+   redistribute connected route-map LOOPBACK
+   !
+   address-family evpn
+      bgp next-hop-unchanged
+      neighbor DCI_OVERLAY activate
+   !
+   address-family ipv4
+      neighbor LEAF_Underlay activate
+!
+end

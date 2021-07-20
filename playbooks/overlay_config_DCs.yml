@@ -1,4 +1,19 @@
 ---
+- hosts: leaf1-DC1,leaf1-DC2
+  gather_facts: false
+  serial: 5
+  tasks:
+  - name: Register variables
+    include_vars:
+      file: "{{lookup('env','PWD')}}/vars/overlay-DCs.yml"
+      name: overlay
+  - name: Create leaf1-DCs lab-reset config
+    template:
+      src: "{{lookup('env','PWD')}}/templates/lab-reset.j2"
+      dest: "{{lookup('env','PWD')}}/configs/lab-reset_{{inventory_hostname}}.cfg"
+  - name: Upload config
+    eos_config:
+      src: "{{lookup('env','PWD')}}/configs/lab-reset_{{inventory_hostname}}.cfg"
 - hosts: spines
   gather_facts: no
   tasks:

@@ -1,30 +1,26 @@
 service routing protocols model multi-agent
-
+!
 router bgp {{ overlay[inventory_hostname]['BGP']['ASN'] }}
-
    neighbor DCI peer group
    neighbor DCI remote-as 65000
    neighbor DCI maximum-routes 12000
-
    neighbor DCI_OVERLAY peer group
    neighbor DCI_OVERLAY remote-as 65000
    neighbor DCI_OVERLAY update-source Loopback0
    neighbor DCI_OVERLAY ebgp-multihop
    neighbor DCI_OVERLAY send-community
    neighbor DCI_OVERLAY maximum-routes 0
-
 {% for peer in overlay[inventory_hostname]['BGP']['DCI-peers'] %}
    neighbor {{ peer }} peer group DCI
 {% endfor %}   
-
 {% for peer in overlay[inventory_hostname]['BGP']['DCI-ol-peers'] %}
    neighbor {{ peer }} peer group DCI_OVERLAY
 {% endfor %}   
-
+   !
    address-family evpn
       bgp next-hop-unchanged
       neighbor DCI_OVERLAY activate
-   
+   !
    address-family ipv4
-     neighbor DCI activate
-
+      neighbor DCI activate
+!

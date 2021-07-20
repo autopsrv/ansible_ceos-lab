@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: no
+  serial: 5
+  tasks:
+  - name: Backup config
+    eos_config:
+      backup: yes
+      backup_options:
+        dir_path: "{{lookup('env','PWD')}}/backup/"

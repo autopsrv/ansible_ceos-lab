@@ -87,8 +87,14 @@ leaf1-DC1:
     Ethernet4: 
       ipv4: 172.16.16.0
       mask: 31
-    Ethernet6:
+    Ethernet6: 
       ipv4: 192.168.100.1
+      mask: 24
+    Vxlan1:
+      vrf: 100
+      vni: 10200
+      interface: Ethernet7
+      ipv4: 192.168.101.1
       mask: 24
   BGP: 
     ASN: 65101
@@ -96,6 +102,9 @@ leaf1-DC1:
     spine-peers:
       - 172.16.15.1
       - 172.16.16.1
+    spine-ol-peers:
+      - 10.0.0.5
+      - 10.0.0.6
     spine-ASN: 65100
   MLAG: Odd
 leaf2-DC1:
@@ -117,6 +126,9 @@ leaf2-DC1:
     spine-peers:
       - 172.16.25.1
       - 172.16.26.1
+    spine-ol-peers:
+      - 10.0.0.5
+      - 10.0.0.6
     spine-ASN: 65100
   MLAG: Even
 leaf3-DC1:
@@ -138,6 +150,9 @@ leaf3-DC1:
     spine-peers:
       - 172.16.35.1
       - 172.16.36.1
+    spine-ol-peers:
+      - 10.0.0.5
+      - 10.0.0.6
     spine-ASN: 65100
   MLAG: Even
 leaf4-DC1:
@@ -159,6 +174,9 @@ leaf4-DC1:
     spine-peers:
       - 172.16.45.1
       - 172.16.46.1
+    spine-ol-peers:
+      - 10.0.0.5
+      - 10.0.0.6
     spine-ASN: 65100
   MLAG: Odd
 borderleaf1-DC1:
@@ -183,9 +201,14 @@ borderleaf1-DC1:
     spine-peers:
       - 172.16.58.0
       - 172.16.68.0
+    spine-ol-peers:
+      - 10.0.0.5
+      - 10.0.0.6
     spine-ASN: 65100
     DCI-peers:
       - 172.16.80.1
+    DCI-ol-peers:
+      - 10.0.0.20
   MLAG: Odd
 
 borderleaf2-DC1:
@@ -214,9 +237,15 @@ borderleaf2-DC1:
       - 172.16.59.0
       - 172.16.69.0
       - 172.16.79.0
+    spine-ol-peers:
+      - 10.0.0.5
+      - 10.0.0.6
+      - 10.0.0.7
     spine-ASN: 65100
     DCI-peers:
       - 172.16.90.1
+    DCI-ol-peers:
+      - 10.0.0.20
   MLAG: Even
 
 spine1-DC2:
@@ -302,8 +331,14 @@ leaf1-DC2:
     Ethernet4: 
       ipv4: 172.26.16.0
       mask: 31
-    Ethernet6:
+    Ethernet6: 
       ipv4: 192.168.200.1
+      mask: 24
+    Vxlan1:
+      vrf: 200
+      vni: 10200
+      interface: Ethernet7
+      ipv4: 192.168.201.1
       mask: 24
   BGP: 
     ASN: 65201
@@ -311,6 +346,9 @@ leaf1-DC2:
     spine-peers:
       - 172.26.15.1
       - 172.26.16.1
+    spine-ol-peers:
+      - 10.0.0.15
+      - 10.0.0.16
     spine-ASN: 65200
   MLAG: Odd
 leaf2-DC2:
@@ -332,6 +370,9 @@ leaf2-DC2:
     spine-peers:
       - 172.26.25.1
       - 172.26.26.1
+    spine-ol-peers:
+      - 10.0.0.15
+      - 10.0.0.16
     spine-ASN: 65200
   MLAG: Even
 leaf3-DC2:
@@ -353,6 +394,9 @@ leaf3-DC2:
     spine-peers:
       - 172.26.35.1
       - 172.26.36.1
+    spine-ol-peers:
+      - 10.0.0.15
+      - 10.0.0.16
     spine-ASN: 65200
   MLAG: Odd
 leaf4-DC2:
@@ -374,6 +418,9 @@ leaf4-DC2:
     spine-peers:
       - 172.26.45.1
       - 172.26.46.1
+    spine-ol-peers:
+      - 10.0.0.15
+      - 10.0.0.16
     spine-ASN: 65200
   MLAG: Even
 borderleaf1-DC2:
@@ -398,9 +445,14 @@ borderleaf1-DC2:
     spine-peers:
       - 172.26.58.0
       - 172.26.68.0
+    spine-ol-peers:
+      - 10.0.0.15
+      - 10.0.0.16
     spine-ASN: 65200
     DCI-peers:
       - 172.26.80.1
+    DCI-ol-peers:
+      - 10.0.0.20
   MLAG: Odd
 borderleaf2-DC2:
   interfaces:
@@ -428,9 +480,15 @@ borderleaf2-DC2:
       - 172.26.59.0
       - 172.26.69.0
       - 172.26.79.0
+    spine-ol-peers:
+      - 10.0.0.15
+      - 10.0.0.16
+      - 10.0.0.17
     spine-ASN: 65200
     DCI-peers:
       - 172.26.90.1
+    DCI-ol-peers:
+      - 10.0.0.20
   MLAG: Even
 DCI:
   interfaces:

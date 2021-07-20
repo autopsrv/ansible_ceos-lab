@@ -1,21 +1,35 @@
 service routing protocols model multi-agent
+!
 ip routing
-
+!
 {% for item in overlay[inventory_hostname]['interfaces'] %}
-   {% if 'Ethernet' in item %}
-   interface {{ item }}
-      no ip address
-      no switchport
-      no mtu
-   {% else %}
-   no interface {{ item }}
-   {% endif %}
+{% if 'Vxlan' in item %}
+interface {{ overlay[inventory_hostname]['interfaces'][item]['interface']}}
+   no ip address
+   no switchport
+   no mtu
+   no vrf tenant-{{ overlay[inventory_hostname]['interfaces'][item]['vrf'] }}
+!
+no ip routing vrf tenant-{{ overlay[inventory_hostname]['interfaces'][item]['vrf'] }}
+!
+no vrf instance tenant-{{ overlay[inventory_hostname]['interfaces'][item]['vrf'] }}
+!
+no interface {{ item }}
+{% elif 'Ethernet' in item %}
+interface {{ item }}
+   no ip address
+   no switchport
+   no mtu
+{% else %}
+no interface {{ item }}
+{% endif %}
+!
 {% endfor %}
-
 no ip prefix-list LOOPBACK
-
+!
 no route-map LOOPBACK permit 10
-
+!
 no peer-filter LEAF-AS-RANGE
-
+!
 no router bgp
+!
