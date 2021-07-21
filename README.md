@@ -2,7 +2,7 @@
 ### Lab Topology
 ![alt text](https://github.com/autopsrv/ansible_docker-topo/blob/main/topo.jpeg?raw=true)
 
-> Note: use [docker-topo](https://github.com/networkop/docker-topo/) to build lab topology and intftype of ceos-lab set to 'et'.
+> Note: INTFTYPE for ceos-lab set to 'et', here using [docker-topo](https://github.com/networkop/docker-topo/) to build the lab topology.
 ### Laptop Environment:
 ```
 # python3 -V
@@ -29,7 +29,7 @@ ansible [core 2.11.2]
 arista.eos                    2.1.2
 ```
 ### Ansible Configuration files
-#### Configuration files
+#### Inventory and Configuration files
 - [ansible.cfg](https://github.com/autopsrv/ansible_docker-topo/blob/main/ansible.cfg): Ansible configuration file.
 - [hosts.ini](https://github.com/autopsrv/ansible_docker-topo/blob/main/hosts.ini): Ansible inventory file.
 #### Variables files
@@ -41,12 +41,15 @@ arista.eos                    2.1.2
 - [spine-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/spine-overlay.j2): a template to generate spine configuration.
 - [DCI-overlay.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/DCI-overlay.j2): a template to generate DCI configuration.
 - [lab-reset.j2](https://github.com/autopsrv/ansible_docker-topo/blob/main/templates/lab-reset.j2): a template to generate lab-reset configuration.
-#### Playbook files
+#### Playbooks files
 - [overlay_config_DCs.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/overlay_config_DCs.yml): a playbook file to configure and deploy EVPN/VXLAN overlay & EBGP underlay networks.
 - [underlay_config_DCs.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/underlay_config_DCs.yml): a playbook file to configure and deploy EBGP underlay networks.
 - [lab-reset.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/lab-reset.yml): a playbook file to reset lab environment.
 - [backup.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/backup.yml): a playbook file to create a full backup of running-config.
 - [add_ssh_key.yml](https://github.com/autopsrv/ansible_docker-topo/blob/main/playbooks/add_ssh_key.yml): a playbook file to set SSH key.
+#### Device Configs Directories 
+- [/configs/](https://github.com/autopsrv/ansible_ceos-lab/tree/main/configs): to save all configs generated from Jinja2 templates under this directory.
+- [/backup/](https://github.com/autopsrv/ansible_ceos-lab/tree/main/backup): to save all running-configs for devices under this directory.
 ### Ansible for Provisioning
 #### EVPN/VXLAN overlay & EBGP underlay networks deployment
 ```
@@ -217,7 +220,7 @@ Create DCI config ------------------------------------------------------- 0.72s
 ```
 # ansible-playbook playbooks/underlay_config_DCs.yml
 ```
-#### Reset Lab Env
+#### Reset Lab env
 ```
 # ansible-playbook playbooks/lab-reset.yml
 ```
